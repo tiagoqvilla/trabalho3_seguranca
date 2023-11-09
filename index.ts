@@ -1,3 +1,5 @@
+const Big = require("big.js");
+
 /**
  * Calcula (g ^ b) mod p
  * @param g
@@ -5,16 +7,15 @@
  * @param p
  * @returns
  */
-const calculateKey = (g: bigint, exp: bigint, p: bigint) => {
-  if (exp === 1) return g;
+const calculateKey = (g: number, exp: number, p: number) => {
+  let x = Big(g);
 
-  return g ** exp;
+  return x.pow(exp).mod(p).toNumber();
 };
 
-let p = BigInt(1041607122029938459843911326429539139964006065005940226363139);
-let g = BigInt(10);
-
-let a = BigInt(123456789012345678901234567890123456789);
-
-let A = calculateKey(g, a, p);
-console.log(A);
+/**
+ * Converte um valor hexadecimal para inteiro
+ * @param hex Valor em hexadecimal
+ * @returns
+ */
+const hexToDecimal = (hex: string) => parseInt(hex, 16);
