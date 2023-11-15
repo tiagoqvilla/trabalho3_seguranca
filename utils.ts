@@ -1,4 +1,4 @@
-import bigInt from "big-integer";
+import bigInt from 'big-integer'
 
 /**
  * Converte um valor hexadecimal para inteiro
@@ -6,8 +6,8 @@ import bigInt from "big-integer";
  * @returns
  */
 export const hex2decimal = (hex: string) => {
-  return BigInt("0x" + hex).toString(10);
-};
+  return BigInt('0x' + hex).toString(10)
+}
 
 /**
  * Converte um valor decimal para hexadecimal
@@ -15,8 +15,8 @@ export const hex2decimal = (hex: string) => {
  * @returns
  */
 export const decimal2hex = (decimal: any) => {
-  return decimal.toString(16);
-};
+  return decimal.toString(16)
+}
 
 /**
  * Converte um valor hexadecimal para binário
@@ -24,8 +24,8 @@ export const decimal2hex = (decimal: any) => {
  * @returns Valor em binário
  */
 export const hex2bin = (hex: string) => {
-  return parseInt(hex, 16).toString(2).padStart(8, "0");
-};
+  return parseInt(hex, 16).toString(2).padStart(8, '0')
+}
 
 /**
  * Recebe um valor N e gera um número aleatório com esse tamanho
@@ -37,5 +37,16 @@ export const getRandom = (length: number) => {
     Math.floor(
       Math.pow(10, length - 1) + Math.random() * 9 * Math.pow(10, length - 1)
     )
-  );
-};
+  )
+}
+
+/**
+ * Calcula (g ^ b) mod p
+ * @param g
+ * @param b
+ * @param p
+ * @returns
+ */
+export const calculateKey = (g: any, exp: any, p: any) => {
+  return g.modPow(exp, p)
+}
