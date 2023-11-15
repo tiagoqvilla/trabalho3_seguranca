@@ -9,8 +9,22 @@ export const hex2decimal = (hex: string) => {
   return BigInt("0x" + hex).toString(10);
 };
 
+/**
+ * Converte um valor decimal para hexadecimal
+ * @param decimal Valor em bigInt
+ * @returns
+ */
 export const decimal2hex = (decimal: any) => {
   return decimal.toString(16);
+};
+
+/**
+ * Converte um valor hexadecimal para binário
+ * @param hex Valor em hexadecimal
+ * @returns Valor em binário
+ */
+export const hex2bin = (hex: string) => {
+  return parseInt(hex, 16).toString(2).padStart(8, "0");
 };
 
 /**

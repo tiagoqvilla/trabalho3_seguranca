@@ -1,7 +1,7 @@
 var bigInt = require("big-integer");
 
 import { g, p } from "./constants";
-import { decimal2hex, getRandom } from "./utils";
+import { decimal2hex, getRandom, hex2bin } from "./utils";
 
 /**
  * Calcula (g ^ b) mod p
@@ -26,3 +26,7 @@ const A = calculateKey(g, a, p);
 // Valor de "A" em hexadecimal:
 // 9B0B8C1CD75336F5B37DA260C8E5BB692886396DC17290BC118F2A851C0FAB5B43B6C48A99F6263A7CFC6CE1B29138BCD79BE337E68012E4CD1D08709139D91503B5BD3D9B97E000C6C856877B4D2E97D45E9DF475134AA519081E4EC4D5B6306F7437AAB7591CEA8B18B758F5A4680E558A2CC49273CA013C3AD4E7D538B9CE
 const A_HEX = decimal2hex(A.value);
+
+const hasher = new Bun.CryptoHasher("sha256");
+
+console.log(hex2bin(A_HEX));
