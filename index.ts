@@ -43,3 +43,7 @@ const V = calculateKey(B, a, p)
 const hasher = new Bun.CryptoHasher('sha256')
 hasher.update(V.toString())
 const S = hasher.digest('hex')
+
+// Valor dos 128 primeiros bits de "S"
+// 37965DF8494BB0702BCBF20410891F25
+let S_128bits = S.slice(0, 32)
