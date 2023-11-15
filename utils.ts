@@ -9,6 +9,10 @@ export const hex2decimal = (hex: string) => {
   return BigInt("0x" + hex).toString(10);
 };
 
+export const decimal2hex = (decimal: any) => {
+  return decimal.toString(16);
+};
+
 /**
  * Recebe um valor N e gera um número aleatório com esse tamanho
  * @param length Tamanho do número a ser gerado
