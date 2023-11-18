@@ -50,3 +50,7 @@ export const getRandom = (length: number) => {
 export const calculateKey = (g: any, exp: any, p: any) => {
   return g.modPow(exp, p)
 }
+
+export const reverseString = (str: string) => {
+  return str.split('').reverse().join('')
+}

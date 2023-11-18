@@ -1,8 +1,15 @@
 var bigInt = require('big-integer')
 const crypto = require('node:crypto')
 
+import { createCipheriv } from 'crypto'
 import { g, p } from './constants'
-import { calculateKey, decimal2hex, getRandom, hex2decimal } from './utils'
+import {
+  calculateKey,
+  decimal2hex,
+  getRandom,
+  hex2decimal,
+  reverseString,
+} from './utils'
 
 // ETAPA 1 -----------------------------
 
@@ -41,12 +48,11 @@ hasher.update(Buffer.from(V_hex, 'hex'))
 const S = hasher.digest('hex')
 
 // S
-// 37965df8494bb0702bcbf20410891f25941c0dca886b5ea6532c29f7ce30e26b
+// c87ec5721bf4ed4733cc960b3aefdf7acf6aafa098fa0075e557b9dc4a1984af
 
 // Valor dos 128 primeiros bits de "S"
-// 37965df8494bb0702bcbf20410891f25
+// c87ec5721bf4ed4733cc960b3aefdf7a
 let key = S.slice(0, 32)
-console.log(key)
 
 const MSG =
   '060BA6A669939100308F65F63A0BD872A049E6BF9C3135C9192DA43736304C8B38D17E0AF9F8740CFE4C29D921E8BA7B2401552933F66DEE73E7C640C559A98A71F97A9677F73CD54105F79987A4FD448CE7C0B99ACD2DF3BA27CCC3116DDAF7F8424698C47BF89AE8E5D6761E91D5BB'
@@ -63,3 +69,21 @@ let decipher = crypto.createDecipheriv(algorithm, key_hex, iv_hex)
 
 let decrypted = decipher.update(msg_hex)
 decrypted += decipher.final()
+
+let reversed_msg = reverseString(decrypted)
+
+let randomIv = crypto.randomBytes(16)
+console.log(randomIv.toString('hex'))
+
+const cipher = createCipheriv(algorithm, key_hex, randomIv)
+let encrypted = cipher.update(reversed_msg, 'utf8', 'hex')
+encrypted += cipher.final('hex')
+
+let final_encrypted = randomIv.toString('hex') + encrypted
+console.log(final_encrypted)
+
+// IV aleatório gerado:
+//059e1eaffac33de18d134433cfa1bdda
+
+// Mensagem final encriptada:
+// 059e1eaffac33de18d134433cfa1bddae3fa71ee657bf80d0ee2c3b2eb68c59176837e6061d5117e7622c4a391da6cba9bde489c5acc4506efeb4707e4fb1c398ddd1462ff9f682ef866975736212ceac36511c1f89177778a4bfa1eda1ac26fa6a5303e0d0a339d79fddb619f91764e
