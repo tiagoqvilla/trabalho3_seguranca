@@ -44,18 +44,19 @@ const S = hasher.digest("hex");
 // Valor dos 128 primeiros bits de "S"
 // 37965df8494bb0702bcbf20410891f25
 let key = S.slice(0, 32);
-console.log(key);
 
 const MSG =
   "060BA6A669939100308F65F63A0BD872A049E6BF9C3135C9192DA43736304C8B38D17E0AF9F8740CFE4C29D921E8BA7B2401552933F66DEE73E7C640C559A98A71F97A9677F73CD54105F79987A4FD448CE7C0B99ACD2DF3BA27CCC3116DDAF7F8424698C47BF89AE8E5D6761E91D5BB";
-let iv = MSG.slice(0, 16);
-console.log(iv);
+let iv = MSG.slice(0, 32);
 
-let algorithm = "aes-256-cbc";
-let decipher = crypto.createDecipheriv(
-  algorithm,
-  Buffer.from(key),
-  Buffer.from(iv)
-);
-let decrypted = decipher.update(MSG, "base64", "utf8");
-console.log(decrypted + decipher.final("utf8"));
+let key_hex = Buffer.from(key, "hex");
+
+let iv_hex = Buffer.from(iv, "hex");
+
+let msg_hex = Buffer.from(MSG.slice(0, -32), "hex");
+
+let algorithm = "aes-128-cbc";
+let decipher = crypto.createDecipheriv(algorithm, key_hex, iv_hex);
+
+let decrypted = decipher.update(msg_hex, "hex", "utf8");
+decrypted += decipher.final("utf8");
